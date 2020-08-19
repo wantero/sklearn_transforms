@@ -48,3 +48,17 @@ class GradeMinZero(BaseEstimator, TransformerMixin):
         data['NOTA_GO'] = data['NOTA_GO'].apply(lambda x: 0 if x < 0 else x) 
         
         return data
+    
+class UpdateFeatures(BaseEstimator, TransformerMixin):
+    def __init__(self,features):
+        self.features = features
+        return
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+
+        features = ["NOTA_DE", "NOTA_EM", "NOTA_MF", "NOTA_GO"]
+
+        return features
