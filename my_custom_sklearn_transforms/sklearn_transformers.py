@@ -48,6 +48,23 @@ class GradeMinZero(BaseEstimator, TransformerMixin):
         data['NOTA_GO'] = data['NOTA_GO'].apply(lambda x: 0 if x < 0 else x) 
         
         return data
+
+class MeanGradeIfNaN(BaseEstimator, TransformerMixin):
+    def __init__(self):
+        return
+
+    def fit(self, X, y=None):
+        return self
+    
+    def transform(self, X):
+        data = X.copy()
+
+        data['NOTA_DE'] = data['NOTA_DE'].apply(lambda x: data['NOTA_EM'] if np.isnan(x) else x)
+        data['NOTA_EM'] = data['NOTA_EM'].apply(lambda x: data['NOTA_DE'] if np.isnan(x) else x)
+        data['NOTA_MF'] = data['NOTA_MF'].apply(lambda x: data['NOTA_GO'] if np.isnan(x) else x)
+        data['NOTA_GO'] = data['NOTA_GO'].apply(lambda x: data['NOTA_MF'] if np.isnan(x) else x)
+        
+        return data        
     
 class UpdateFeatures(BaseEstimator, TransformerMixin):
     def __init__(self,features):
