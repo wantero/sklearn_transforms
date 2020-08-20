@@ -67,3 +67,23 @@ class DataTransform(BaseEstimator, TransformerMixin):
         data['REPROVACOES_GO'] = data['REPROVACOES_GO'].apply(lambda x: 1 if x > 1 else 0)
 
         return data
+
+class SetTrainFeaturesAndTarget(BaseEstimator, TransformerMixin):
+    def __init__(self, features, target):
+        self.features = features
+        self.target = target
+        return
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        data = X.copy()
+
+        X = data[self.features]
+        y = data[self.target]
+        
+        X = pd.DataFrame(data=X, index=None, columns=self.features)
+        y = pd.DataFrame(data=y, index=None, columns=self.target)
+
+        return X, y
