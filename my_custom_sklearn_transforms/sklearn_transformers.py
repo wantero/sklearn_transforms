@@ -32,10 +32,10 @@ class DataTransform(BaseEstimator, TransformerMixin):
         data['NOTA_GO'] = data['NOTA_GO'].apply(lambda x: 10 if x > 10 else x) 
 
         # Adjusting grades lower than zero
-        data['NOTA_DE'] = data['NOTA_DE'].apply(lambda x: 0 if x < 0 or np.isnan(x) else x) 
-        data['NOTA_EM'] = data['NOTA_EM'].apply(lambda x: 0 if x < 0 or np.isnan(x) else x) 
-        data['NOTA_MF'] = data['NOTA_MF'].apply(lambda x: 0 if x < 0 or np.isnan(x) else x) 
-        data['NOTA_GO'] = data['NOTA_GO'].apply(lambda x: 0 if x < 0 or np.isnan(x) else x) 
+        data['NOTA_DE'] = data['NOTA_DE'].apply(lambda x: 0 if x < 0 else x) 
+        data['NOTA_EM'] = data['NOTA_EM'].apply(lambda x: 0 if x < 0 else x) 
+        data['NOTA_MF'] = data['NOTA_MF'].apply(lambda x: 0 if x < 0 else x) 
+        data['NOTA_GO'] = data['NOTA_GO'].apply(lambda x: 0 if x < 0 else x) 
 
         # Bellow or Above the mean
         data['NOTA_DE'] = data['NOTA_DE'].apply(lambda x: 0 if x < 7 else 1) 
