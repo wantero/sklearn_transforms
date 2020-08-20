@@ -50,10 +50,10 @@ class DataTransform(BaseEstimator, TransformerMixin):
         data['NOTA_GO'] = data['NOTA_GO'].apply(lambda x: 0 if x < 0 else x) 
 
         # Sqrt grade
-        data['SQRT_NOTA_DE'] = data['NOTA_DE'].apply(lambda x: numpy.sqrt(x)) 
-        data['SQRT_NOTA_EM'] = data['NOTA_EM'].apply(lambda x: numpy.sqrt(x)) 
-        data['SQRT_NOTA_MF'] = data['NOTA_MF'].apply(lambda x: numpy.sqrt(x)) 
-        data['SQRT_NOTA_GO'] = data['NOTA_GO'].apply(lambda x: numpy.sqrt(x)) 
+        # data['SQRT_NOTA_DE'] = data['NOTA_DE'].apply(lambda x: numpy.sqrt(x)) 
+        # data['SQRT_NOTA_EM'] = data['NOTA_EM'].apply(lambda x: numpy.sqrt(x)) 
+        # data['SQRT_NOTA_MF'] = data['NOTA_MF'].apply(lambda x: numpy.sqrt(x)) 
+        # data['SQRT_NOTA_GO'] = data['NOTA_GO'].apply(lambda x: numpy.sqrt(x)) 
 
         # Bellow or Above the mean
         data['AUX_NOTA_DE'] = data['NOTA_DE'].apply(lambda x: 0 if x < 7 else 1) 
@@ -61,7 +61,7 @@ class DataTransform(BaseEstimator, TransformerMixin):
         data['AUX_NOTA_MF'] = data['NOTA_MF'].apply(lambda x: 0 if x < 7 else 1) 
         data['AUX_NOTA_GO'] = data['NOTA_GO'].apply(lambda x: 0 if x < 7 else 1) 
 
-        myColumns = ['SQRT_NOTA_DE', 'SQRT_NOTA_EM', 'SQRT_NOTA_MF', 'SQRT_NOTA_GO'
+        myColumns = [ #'SQRT_NOTA_DE', 'SQRT_NOTA_EM', 'SQRT_NOTA_MF', 'SQRT_NOTA_GO'
                      'AUX_NOTA_DE', 'AUX_NOTA_EM', 'AUX_NOTA_MF', 'AUX_NOTA_GO']
 
 
