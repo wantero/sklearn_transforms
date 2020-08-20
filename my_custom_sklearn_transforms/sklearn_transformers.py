@@ -27,15 +27,15 @@ class DataTransform(BaseEstimator, TransformerMixin):
         data = X.copy()
 
         # Replica the same grade to discipline of the same area
-        # for index, row in data.iterrows():
-        #     if(type(row['NOTA_DE']) == float and pd.isna(row['NOTA_DE'])):
-        #         data.loc[data.index == index, 'NOTA_DE'] = row['NOTA_EM']
-        #     if(type(row['NOTA_EM']) == float and pd.isna(row['NOTA_EM'])):
-        #         data.loc[data.index == index, 'NOTA_EM'] = row['NOTA_DE']
-        #     if(type(row['NOTA_MF']) == float and pd.isna(row['NOTA_MF'])):
-        #         data.loc[data.index == index, 'NOTA_MF'] = row['NOTA_GO']
-        #     if(type(row['NOTA_GO']) == float and pd.isna(row['NOTA_GO'])):
-        #         data.loc[data.index == index, 'NOTA_GO'] = row['NOTA_MF']        
+        for index, row in data.iterrows():
+            if(type(row['NOTA_DE']) == float and pd.isna(row['NOTA_DE'])):
+                data.loc[data.index == index, 'NOTA_DE'] = row['NOTA_EM']
+            if(type(row['NOTA_EM']) == float and pd.isna(row['NOTA_EM'])):
+                data.loc[data.index == index, 'NOTA_EM'] = row['NOTA_DE']
+            if(type(row['NOTA_MF']) == float and pd.isna(row['NOTA_MF'])):
+                data.loc[data.index == index, 'NOTA_MF'] = row['NOTA_GO']
+            if(type(row['NOTA_GO']) == float and pd.isna(row['NOTA_GO'])):
+                data.loc[data.index == index, 'NOTA_GO'] = row['NOTA_MF']        
 
         # Adjusting grades upper than 10
         data['NOTA_DE'] = data['NOTA_DE'].apply(lambda x: 10 if x > 10 else x) 
@@ -59,9 +59,13 @@ class DataTransform(BaseEstimator, TransformerMixin):
         data['AUX_NOTA_DE'] = data['NOTA_DE'].apply(lambda x: 0 if x < 5 else 1) 
         data['AUX_NOTA_EM'] = data['NOTA_EM'].apply(lambda x: 0 if x < 5 else 1) 
         data['AUX_NOTA_MF'] = data['NOTA_MF'].apply(lambda x: 0 if x < 5 else 1) 
-        data['AUX_NOTA_GO'] = data['NOTA_GO'].apply(lambda x: 0 if x < 5 else 1) 
+        data['AUX_NOTA_GO'] = data['NOTA_GO'].apply(lambda x: 0 if x < 5 else 1)
 
-        myColumns = ['NOTA_DE', 'NOTA_EM', 'NOTA_MF', 'NOTA_GO',
+        for index, row in data.iterrows():
+            data.loc[data.index == index, 'MEDIA_EXATAS']  = round((row['NOTA_MF'] + row['NOTA_GO']) / 2, 1)
+            data.loc[data.index == index, 'MEDIA_HUMANAS'] = round((row['NOTA_DE'] + row['NOTA_EM']) / 2, 1)
+
+        myColumns = ['NOTA_DE', 'NOTA_EM', 'NOTA_MF', 'NOTA_GO', 'MEDIA_EXATAS', 'MEDIA_HUMANAS'
                      'SQRT_NOTA_DE', 'SQRT_NOTA_EM', 'SQRT_NOTA_MF', 'SQRT_NOTA_GO'
                      'AUX_NOTA_DE', 'AUX_NOTA_EM', 'AUX_NOTA_MF', 'AUX_NOTA_GO']
 
