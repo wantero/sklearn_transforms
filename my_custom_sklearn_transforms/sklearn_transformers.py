@@ -60,30 +60,8 @@ class DataTransform(BaseEstimator, TransformerMixin):
         data['AUX_NOTA_MF'] = data['NOTA_MF'].apply(lambda x: 0 if x < 7 else 1) 
         data['AUX_NOTA_GO'] = data['NOTA_GO'].apply(lambda x: 0 if x < 7 else 1) 
 
-        # Convert to binary
-        data['REPROVACOES_DE'] = data['REPROVACOES_DE'].apply(lambda x: 1 if x > 1 else 0) 
-        data['REPROVACOES_EM'] = data['REPROVACOES_EM'].apply(lambda x: 1 if x > 1 else 0) 
-        data['REPROVACOES_MF'] = data['REPROVACOES_MF'].apply(lambda x: 1 if x > 1 else 0) 
-        data['REPROVACOES_GO'] = data['REPROVACOES_GO'].apply(lambda x: 1 if x > 1 else 0)
+        myColumns = ['SQRT_NOTA_DE', 'SQRT_NOTA_EM', 'SQRT_NOTA_MF', 'SQRT_NOTA_GO'
+                     'AUX_NOTA_DE', 'AUX_NOTA_EM', 'AUX_NOTA_MF', 'AUX_NOTA_GO']
 
-        return data
 
-class SetTrainFeaturesAndTarget(BaseEstimator, TransformerMixin):
-    def __init__(self, features, target):
-        self.features = features
-        self.target = target
-        return
-
-    def fit(self, X, y=None):
-        return self
-
-    def transform(self, X):
-        data = X.copy()
-
-        X = data[self.features]
-        y = data[self.target]
-        
-        X = pd.DataFrame(data=X, index=None, columns=self.features)
-        y = pd.DataFrame(data=y, index=None, columns=self.target)
-
-        return X, y
+        return pd.DataFrame(data=data, index=None, columns=myColumns)
